@@ -2,28 +2,31 @@ export default function HomePage() {
   return (
     <div style={styles.page}>
 
-      {/* REAL crisp background */}
-      <div style={styles.backgroundImage}></div>
+      {/* Animated Glow Layers */}
+      <div style={styles.glowLayer1}></div>
+      <div style={styles.glowLayer2}></div>
 
-      {/* Dark overlay */}
-      <div style={styles.darkOverlay}></div>
+      {/* Diagonal Light Beams */}
+      <div style={styles.lightBeam1}></div>
+      <div style={styles.lightBeam2}></div>
 
-      {/* Cinematic ambient glows */}
-      <div style={styles.glow1}></div>
-      <div style={styles.glow2}></div>
+      {/* Noise Texture */}
+      <div style={styles.noise}></div>
 
-      {/* Floating particles */}
+      {/* Floating Parallax Particles */}
       <ul style={styles.particles}>
-        {Array.from({ length: 16 }).map((_, i) => (
+        {Array.from({ length: 18 }).map((_, i) => (
           <li key={i} style={styles.particle}></li>
         ))}
       </ul>
 
-      {/* Main card */}
+      {/* Card */}
       <div style={styles.card}>
         <h2 style={styles.title}>Welcome to CMS</h2>
 
-        <p style={styles.subtitle}>Choose how you want to continue</p>
+        <p style={styles.subtitle}>
+          Choose how you want to continue
+        </p>
 
         <a href="/admin-login" style={styles.button}>
           Admin Login
@@ -39,143 +42,169 @@ export default function HomePage() {
 
 const styles = {
   page: {
+    background: "#0b0b0d",
+    color: "white",
     height: "100vh",
     width: "100vw",
-    position: "relative",
     overflow: "hidden",
+    position: "relative",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    color: "white",
-    background: "#000",
   },
 
-  /* CRISP, STABLE background image */
-  backgroundImage: {
+  /* Rotating gradient blobs */
+  glowLayer1: {
     position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundImage: "url('https://i.imgur.com/6EkedVb.jpeg')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    zIndex: 0,
-  },
-
-  darkOverlay: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    background: "rgba(0,0,0,0.55)",
+    width: "600px",
+    height: "600px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(80,80,255,0.18), transparent 70%)",
+    top: "-150px",
+    left: "-150px",
+    animation: "rotateSlow 40s linear infinite",
+    filter: "blur(40px)",
     zIndex: 1,
   },
 
-  glow1: {
-    position: "absolute",
-    width: "550px",
-    height: "550px",
-    borderRadius: "50%",
-    background: "radial-gradient(circle, rgba(80,80,255,0.25), transparent 70%)",
-    top: "-180px",
-    left: "-150px",
-    animation: "slowGlow 20s infinite alternate",
-    filter: "blur(60px)",
-    zIndex: 2,
-  },
-
-  glow2: {
+  glowLayer2: {
     position: "absolute",
     width: "500px",
     height: "500px",
     borderRadius: "50%",
-    background:
-      "radial-gradient(circle, rgba(0,200,255,0.15), transparent 70%)",
-    bottom: "-180px",
-    right: "-150px",
-    animation: "slowGlow 22s infinite alternate-reverse",
-    filter: "blur(60px)",
-    zIndex: 2,
+    background: "radial-gradient(circle, rgba(0,200,255,0.15), transparent 70%)",
+    bottom: "-120px",
+    right: "-120px",
+    animation: "rotateSlowReverse 45s linear infinite",
+    filter: "blur(35px)",
+    zIndex: 1,
   },
 
+  /* Diagonal light streaks */
+  lightBeam1: {
+    position: "absolute",
+    top: 0,
+    left: "-30%",
+    width: "200%",
+    height: "100%",
+    background: "linear-gradient(120deg, rgba(255,255,255,0.03), transparent 70%)",
+    animation: "slideDiagonal 18s linear infinite",
+    zIndex: 1,
+  },
+
+  lightBeam2: {
+    position: "absolute",
+    top: 0,
+    left: "-30%",
+    width: "200%",
+    height: "100%",
+    background: "linear-gradient(120deg, transparent, rgba(255,255,255,0.04), transparent)",
+    animation: "slideDiagonal 30s linear infinite reverse",
+    zIndex: 1,
+  },
+
+  /* Noise texture overlay */
+  noise: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    zIndex: 1,
+    opacity: 0.08,
+    background:
+      "url('https://www.transparenttextures.com/patterns/asfalt-light.png')",
+    pointerEvents: "none",
+  },
+
+  /* Parallax particles */
   particles: {
     position: "absolute",
     width: "100%",
     height: "100%",
     listStyle: "none",
-    padding: 0,
     margin: 0,
+    padding: 0,
     overflow: "hidden",
-    zIndex: 3,
+    zIndex: 2,
   },
 
   particle: {
     position: "absolute",
-    width: "5px",
-    height: "5px",
+    width: "6px",
+    height: "6px",
     borderRadius: "50%",
     background: "rgba(255,255,255,0.15)",
-    animation: "floatUp 13s linear infinite",
+    boxShadow: "0 0 8px rgba(150,150,255,0.5)",
+    animation: "floatParticle 16s linear infinite",
   },
 
   card: {
-    background: "rgba(10, 10, 15, 0.65)",
+    background: "rgba(20, 20, 25, 0.75)",
     padding: "40px",
-    width: "360px",
     borderRadius: "14px",
-    backdropFilter: "blur(12px)",
-    boxShadow: "0 0 25px rgba(0,0,0,0.7)",
+    width: "360px",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 0 25px rgba(0,0,0,0.55)",
     zIndex: 5,
     animation: "fadeIn 1.2s ease",
   },
 
   title: {
-    textAlign: "center",
     marginBottom: "25px",
     fontSize: "28px",
-    fontWeight: 700,
+    textAlign: "center",
   },
 
   subtitle: {
     textAlign: "center",
-    opacity: 0.85,
     marginBottom: "20px",
+    opacity: 0.8,
   },
 
   button: {
     display: "block",
-    textAlign: "center",
-    background: "#4f46e5",
+    width: "100%",
     padding: "12px",
     borderRadius: "8px",
-    marginBottom: "15px",
-    color: "white",
+    background: "#4f46e5",
+    textAlign: "center",
     textDecoration: "none",
-    fontWeight: 600,
+    color: "#fff",
+    marginBottom: "14px",
   },
 
   secondaryButton: {
     display: "block",
-    textAlign: "center",
-    background: "#2e2e34",
+    width: "100%",
     padding: "12px",
     borderRadius: "8px",
-    color: "white",
-    textDecoration: "none",
+    background: "#2c2c31",
     border: "1px solid #444",
-    fontWeight: 600,
+    textAlign: "center",
+    textDecoration: "none",
+    color: "#fff",
   },
 };
 
-/* Inject animations */
-const s = document.createElement("style");
-s.textContent = `
-@keyframes slowGlow {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(1.25); opacity: 0.85; }
+/* Inject Animations */
+const styleEl = document.createElement("style");
+styleEl.textContent = `
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-@keyframes floatUp {
-  0% { transform: translateY(0); opacity: 0.4; }
+@keyframes rotateSlowReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes slideDiagonal {
+  0% { transform: translateX(-20%) translateY(0); }
+  100% { transform: translateX(20%) translateY(0); }
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0); opacity: 0.3; }
   100% { transform: translateY(-1200px); opacity: 0; }
 }
 
@@ -184,4 +213,4 @@ s.textContent = `
   to { opacity: 1; transform: translateY(0); }
 }
 `;
-document.head.appendChild(s);
+document.head.appendChild(styleEl);
