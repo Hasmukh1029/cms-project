@@ -2,15 +2,25 @@ export default function HomePage() {
   return (
     <div style={styles.page}>
 
-      {/* --- Animated Background Elements --- */}
-      <div style={styles.gradientOverlay}></div>
-      <ul style={styles.floatingShapes}>
-        {Array.from({ length: 10 }).map((_, i) => (
-          <li key={i} style={styles.shape}></li>
+      {/* Animated Glow Layers */}
+      <div style={styles.glowLayer1}></div>
+      <div style={styles.glowLayer2}></div>
+
+      {/* Diagonal Light Beams */}
+      <div style={styles.lightBeam1}></div>
+      <div style={styles.lightBeam2}></div>
+
+      {/* Noise Texture */}
+      <div style={styles.noise}></div>
+
+      {/* Floating Parallax Particles */}
+      <ul style={styles.particles}>
+        {Array.from({ length: 18 }).map((_, i) => (
+          <li key={i} style={styles.particle}></li>
         ))}
       </ul>
 
-      {/* --- Content Card --- */}
+      {/* Card */}
       <div style={styles.card}>
         <h2 style={styles.title}>Welcome to CMS</h2>
 
@@ -32,68 +42,116 @@ export default function HomePage() {
 
 const styles = {
   page: {
-    background: "#0d0d0f",
+    background: "#0b0b0d",
     color: "white",
     height: "100vh",
-    width: "100%",
+    width: "100vw",
+    overflow: "hidden",
+    position: "relative",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
-    position: "relative",
   },
 
-  /* soft animated gradient glow */
-  gradientOverlay: {
+  /* Rotating gradient blobs */
+  glowLayer1: {
     position: "absolute",
-    width: "100%",
-    height: "100%",
-    background:
-      "radial-gradient(circle at 30% 30%, rgba(80, 70, 255, 0.15), transparent 60%), \
-       radial-gradient(circle at 70% 70%, rgba(0, 180, 255, 0.12), transparent 60%)",
-    animation: "pulse 6s ease-in-out infinite",
+    width: "600px",
+    height: "600px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(80,80,255,0.18), transparent 70%)",
+    top: "-150px",
+    left: "-150px",
+    animation: "rotateSlow 40s linear infinite",
+    filter: "blur(40px)",
     zIndex: 1,
   },
 
-  /* floating abstract shapes */
-  floatingShapes: {
+  glowLayer2: {
     position: "absolute",
-    listStyle: "none",
+    width: "500px",
+    height: "500px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(0,200,255,0.15), transparent 70%)",
+    bottom: "-120px",
+    right: "-120px",
+    animation: "rotateSlowReverse 45s linear infinite",
+    filter: "blur(35px)",
+    zIndex: 1,
+  },
+
+  /* Diagonal light streaks */
+  lightBeam1: {
+    position: "absolute",
+    top: 0,
+    left: "-30%",
+    width: "200%",
+    height: "100%",
+    background: "linear-gradient(120deg, rgba(255,255,255,0.03), transparent 70%)",
+    animation: "slideDiagonal 18s linear infinite",
+    zIndex: 1,
+  },
+
+  lightBeam2: {
+    position: "absolute",
+    top: 0,
+    left: "-30%",
+    width: "200%",
+    height: "100%",
+    background: "linear-gradient(120deg, transparent, rgba(255,255,255,0.04), transparent)",
+    animation: "slideDiagonal 30s linear infinite reverse",
+    zIndex: 1,
+  },
+
+  /* Noise texture overlay */
+  noise: {
+    position: "absolute",
     width: "100%",
     height: "100%",
+    zIndex: 1,
+    opacity: 0.08,
+    background:
+      "url('https://www.transparenttextures.com/patterns/asfalt-light.png')",
+    pointerEvents: "none",
+  },
+
+  /* Parallax particles */
+  particles: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    listStyle: "none",
     margin: 0,
     padding: 0,
     overflow: "hidden",
-    zIndex: 1,
+    zIndex: 2,
   },
 
-  shape: {
+  particle: {
     position: "absolute",
-    bottom: "-150px",
-    width: "25px",
-    height: "25px",
-    background: "rgba(100, 100, 255, 0.15)",
+    width: "6px",
+    height: "6px",
     borderRadius: "50%",
-    animation: "floatUp 18s linear infinite",
+    background: "rgba(255,255,255,0.15)",
+    boxShadow: "0 0 8px rgba(150,150,255,0.5)",
+    animation: "floatParticle 16s linear infinite",
   },
 
   card: {
-    background: "rgba(26, 26, 29, 0.9)",
+    background: "rgba(20, 20, 25, 0.75)",
     padding: "40px",
-    borderRadius: "12px",
-    width: "350px",
-    backdropFilter: "blur(8px)",
-    boxShadow: "0 0 25px rgba(0,0,0,0.6)",
-    zIndex: 2,
-    animation: "fadeIn 1.2s ease-out",
+    borderRadius: "14px",
+    width: "360px",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 0 25px rgba(0,0,0,0.55)",
+    zIndex: 5,
+    animation: "fadeIn 1.2s ease",
   },
 
   title: {
     marginBottom: "25px",
     fontSize: "28px",
     textAlign: "center",
-    letterSpacing: "1px",
-    fontWeight: "bold",
   },
 
   subtitle: {
@@ -105,45 +163,49 @@ const styles = {
   button: {
     display: "block",
     width: "100%",
-    textAlign: "center",
     padding: "12px",
     borderRadius: "8px",
     background: "#4f46e5",
-    color: "white",
-    fontSize: "16px",
+    textAlign: "center",
     textDecoration: "none",
-    marginBottom: "15px",
-    cursor: "pointer",
-    transition: "0.25s",
+    color: "#fff",
+    marginBottom: "14px",
   },
 
   secondaryButton: {
     display: "block",
     width: "100%",
-    textAlign: "center",
     padding: "12px",
     borderRadius: "8px",
-    background: "#2a2a2d",
-    color: "white",
-    fontSize: "16px",
-    textDecoration: "none",
-    cursor: "pointer",
+    background: "#2c2c31",
     border: "1px solid #444",
-    transition: "0.25s",
+    textAlign: "center",
+    textDecoration: "none",
+    color: "#fff",
   },
 };
 
-/* --- Add animations using JS injection --- */
-const styleSheet = document.createElement("style");
-styleSheet.textContent = `
-@keyframes floatUp {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
-  100% { transform: translateY(-1100px) rotate(360deg); opacity: 0; }
+/* Inject Animations */
+const styleEl = document.createElement("style");
+styleEl.textContent = `
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.1); opacity: 1; }
+@keyframes rotateSlowReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes slideDiagonal {
+  0% { transform: translateX(-20%) translateY(0); }
+  100% { transform: translateX(20%) translateY(0); }
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0); opacity: 0.3; }
+  100% { transform: translateY(-1200px); opacity: 0; }
 }
 
 @keyframes fadeIn {
@@ -151,4 +213,4 @@ styleSheet.textContent = `
   to { opacity: 1; transform: translateY(0); }
 }
 `;
-document.head.appendChild(styleSheet);
+document.head.appendChild(styleEl);
