@@ -1,23 +1,14 @@
 export default function HomePage() {
   return (
-    <div
-      style={{
-        ...styles.page,
-        backgroundImage: "url('https://i.imgur.com/6EkedVb.jpeg')",
-      }}
-    >
-      {/* Dark overlay for readability */}
+    <div style={styles.page}>
+
+      {/* REAL crisp background */}
+      <div style={styles.backgroundImage}></div>
+
+      {/* Dark overlay */}
       <div style={styles.darkOverlay}></div>
 
-      {/* Slow zoom cinematic animation */}
-      <div
-        style={{
-          ...styles.bgAnimator,
-          backgroundImage: "url('https://i.imgur.com/6EkedVb.jpeg')",
-        }}
-      ></div>
-
-      {/* Optional glowing gradients */}
+      {/* Cinematic ambient glows */}
       <div style={styles.glow1}></div>
       <div style={styles.glow2}></div>
 
@@ -50,47 +41,46 @@ const styles = {
   page: {
     height: "100vh",
     width: "100vw",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
+    position: "relative",
+    overflow: "hidden",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    position: "relative",
-    overflow: "hidden",
     color: "white",
+    background: "#000",
+  },
+
+  /* CRISP, STABLE background image */
+  backgroundImage: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundImage: "url('https://i.imgur.com/6EkedVb.jpeg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    zIndex: 0,
   },
 
   darkOverlay: {
     position: "absolute",
     width: "100%",
     height: "100%",
-    background: "rgba(0,0,0,0.60)",
-    backdropFilter: "blur(2px)",
+    background: "rgba(0,0,0,0.55)",
     zIndex: 1,
-  },
-
-  bgAnimator: {
-    position: "absolute",
-    width: "110%",
-    height: "110%",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    animation: "slowZoom 35s ease-in-out infinite",
-    opacity: 0.3,
-    zIndex: 0,
   },
 
   glow1: {
     position: "absolute",
-    width: "600px",
-    height: "600px",
+    width: "550px",
+    height: "550px",
     borderRadius: "50%",
     background: "radial-gradient(circle, rgba(80,80,255,0.25), transparent 70%)",
     top: "-180px",
     left: "-150px",
-    filter: "blur(50px)",
-    zIndex: 1,
+    animation: "slowGlow 20s infinite alternate",
+    filter: "blur(60px)",
+    zIndex: 2,
   },
 
   glow2: {
@@ -99,11 +89,12 @@ const styles = {
     height: "500px",
     borderRadius: "50%",
     background:
-      "radial-gradient(circle, rgba(0,200,255,0.20), transparent 70%)",
+      "radial-gradient(circle, rgba(0,200,255,0.15), transparent 70%)",
     bottom: "-180px",
     right: "-150px",
-    filter: "blur(50px)",
-    zIndex: 1,
+    animation: "slowGlow 22s infinite alternate-reverse",
+    filter: "blur(60px)",
+    zIndex: 2,
   },
 
   particles: {
@@ -114,7 +105,7 @@ const styles = {
     padding: 0,
     margin: 0,
     overflow: "hidden",
-    zIndex: 2,
+    zIndex: 3,
   },
 
   particle: {
@@ -123,15 +114,15 @@ const styles = {
     height: "5px",
     borderRadius: "50%",
     background: "rgba(255,255,255,0.15)",
-    animation: "floatUp 12s linear infinite",
+    animation: "floatUp 13s linear infinite",
   },
 
   card: {
-    background: "rgba(15, 15, 20, 0.65)",
+    background: "rgba(10, 10, 15, 0.65)",
     padding: "40px",
     width: "360px",
     borderRadius: "14px",
-    backdropFilter: "blur(10px)",
+    backdropFilter: "blur(12px)",
     boxShadow: "0 0 25px rgba(0,0,0,0.7)",
     zIndex: 5,
     animation: "fadeIn 1.2s ease",
@@ -175,13 +166,12 @@ const styles = {
   },
 };
 
-/* ANIMATIONS */
+/* Inject animations */
 const s = document.createElement("style");
 s.textContent = `
-@keyframes slowZoom {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.12); }
-  100% { transform: scale(1); }
+@keyframes slowGlow {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.25); opacity: 0.85; }
 }
 
 @keyframes floatUp {
