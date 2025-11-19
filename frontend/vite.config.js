@@ -6,10 +6,8 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, "index.html"),
-      },
+      input: resolve(__dirname, "index.html"),
     },
   },
-  publicDir: "public",
+  publicDir: "public",  // <-- ENSURES `_redirects` gets copied
 });
