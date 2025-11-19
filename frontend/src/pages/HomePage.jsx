@@ -1,14 +1,21 @@
-import forest from "../assets/forest.jpg";
-
 export default function HomePage() {
   return (
-    <div style={{ ...styles.page, backgroundImage: `url(${forest})` }}>
-
+    <div
+      style={{
+        ...styles.page,
+        backgroundImage: "url('https://i.imgur.com/6EkedVb.jpeg')",
+      }}
+    >
       {/* Dark overlay for readability */}
       <div style={styles.darkOverlay}></div>
 
       {/* Slow zoom cinematic animation */}
-      <div style={{ ...styles.bgAnimator, backgroundImage: `url(${forest})` }}></div>
+      <div
+        style={{
+          ...styles.bgAnimator,
+          backgroundImage: "url('https://i.imgur.com/6EkedVb.jpeg')",
+        }}
+      ></div>
 
       {/* Optional glowing gradients */}
       <div style={styles.glow1}></div>
@@ -25,9 +32,7 @@ export default function HomePage() {
       <div style={styles.card}>
         <h2 style={styles.title}>Welcome to CMS</h2>
 
-        <p style={styles.subtitle}>
-          Choose how you want to continue
-        </p>
+        <p style={styles.subtitle}>Choose how you want to continue</p>
 
         <a href="/admin-login" style={styles.button}>
           Admin Login
@@ -87,12 +92,14 @@ const styles = {
     filter: "blur(50px)",
     zIndex: 1,
   },
+
   glow2: {
     position: "absolute",
     width: "500px",
     height: "500px",
     borderRadius: "50%",
-    background: "radial-gradient(circle, rgba(0,200,255,0.20), transparent 70%)",
+    background:
+      "radial-gradient(circle, rgba(0,200,255,0.20), transparent 70%)",
     bottom: "-180px",
     right: "-150px",
     filter: "blur(50px)",
