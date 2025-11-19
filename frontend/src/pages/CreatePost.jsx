@@ -11,7 +11,6 @@ export default function CreatePost() {
 
   const token = localStorage.getItem("token");
 
-  // Load categories (FROM RENDER BACKEND)
   useEffect(() => {
     axios
       .get("https://cms-backend-hgpt.onrender.com/api/categories")
@@ -19,7 +18,6 @@ export default function CreatePost() {
       .catch((err) => console.log(err));
   }, []);
 
-  // Create post (SEND TO RENDER BACKEND)
   const createPost = async () => {
     try {
       await axios.post(
@@ -36,57 +34,36 @@ export default function CreatePost() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#0f0f0f",
-        color: "white",
-        padding: "40px 0",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <div
-        style={{
-          width: "850px",
-          margin: "auto",
-          backgroundColor: "#181818",
-          padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 0 20px rgba(0,0,0,0.5)",
-        }}
-      >
-        <h2 style={{ marginBottom: "20px", fontSize: "28px", color: "#ffffff" }}>
-          Create New Post
-        </h2>
+    <div style={styles.page}>
 
+      {/* Ambient Background Glow */}
+      <div style={styles.glow1}></div>
+      <div style={styles.glow2}></div>
+
+      {/* Particles */}
+      <ul style={styles.particles}>
+        {Array.from({ length: 18 }).map((_, i) => (
+          <li key={i} style={styles.particle}></li>
+        ))}
+      </ul>
+
+      <div style={styles.container}>
+        <h2 style={styles.heading}>Create New Post</h2>
+
+        {/* Title */}
         <input
           type="text"
           placeholder="Enter Post Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            border: "1px solid #333",
-            marginBottom: "15px",
-            backgroundColor: "#121212",
-            color: "white",
-          }}
+          style={styles.input}
         />
 
+        {/* Category */}
         <select
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            border: "1px solid #333",
-            marginBottom: "15px",
-            backgroundColor: "#121212",
-            color: "white",
-          }}
+          style={styles.input}
         >
           <option value="">Choose Category</option>
           {categories.map((c) => (
@@ -96,15 +73,8 @@ export default function CreatePost() {
           ))}
         </select>
 
-        <div
-          style={{
-            backgroundColor: "#121212",
-            borderRadius: "8px",
-            padding: "5px",
-            border: "1px solid #333",
-            marginBottom: "20px",
-          }}
-        >
+        {/* Quill Editor */}
+        <div style={styles.editorBox}>
           <ReactQuill
             value={content}
             onChange={setContent}
@@ -113,23 +83,140 @@ export default function CreatePost() {
           />
         </div>
 
-        <button
-          onClick={createPost}
-          style={{
-            padding: "12px 25px",
-            backgroundColor: "#2563eb",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            color: "white",
-            fontSize: "16px",
-            fontWeight: "bold",
-            transition: "0.3s",
-          }}
-        >
+        {/* Publish Button */}
+        <button onClick={createPost} style={styles.button}>
           Publish Post
         </button>
       </div>
     </div>
   );
 }
+
+/* ---------------------- STYLING ------------------------- */
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    background: "#0b0b0d",
+    color: "white",
+    padding: "40px 0",
+    fontFamily: "Arial, sans-serif",
+    position: "relative",
+    overflow: "hidden",
+  },
+
+  glow1: {
+    position: "absolute",
+    width: "550px",
+    height: "550px",
+    background: "radial-gradient(circle, rgba(80,80,255,0.22), transparent 70%)",
+    borderRadius: "50%",
+    top: "-150px",
+    left: "-150px",
+    filter: "blur(70px)",
+    animation: "pulse 14s infinite alternate",
+  },
+
+  glow2: {
+    position: "absolute",
+    width: "520px",
+    height: "520px",
+    background:
+      "radial-gradient(circle, rgba(0,200,255,0.18), transparent 70%)",
+    borderRadius: "50%",
+    bottom: "-150px",
+    right: "-150px",
+    filter: "blur(70px)",
+    animation: "pulse 16s infinite alternate-reverse",
+  },
+
+  particles: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+    zIndex: 1,
+  },
+
+  particle: {
+    position: "absolute",
+    width: "6px",
+    height: "6px",
+    borderRadius: "50%",
+    background: "rgba(255,255,255,0.18)",
+    animation: "floatUp 14s linear infinite",
+  },
+
+  container: {
+    width: "850px",
+    margin: "auto",
+    background: "rgba(30,30,35,0.65)",
+    backdropFilter: "blur(12px)",
+    padding: "35px",
+    borderRadius: "14px",
+    boxShadow: "0 0 25px rgba(0,0,0,0.7)",
+    position: "relative",
+    zIndex: 5,
+    animation: "fadeIn 1s ease",
+  },
+
+  heading: {
+    fontSize: "28px",
+    marginBottom: "25px",
+    fontWeight: "bold",
+  },
+
+  input: {
+    width: "100%",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid rgba(255,255,255,0.1)",
+    background: "rgba(25,25,30,0.85)",
+    color: "white",
+    marginBottom: "15px",
+    fontSize: "16px",
+  },
+
+  editorBox: {
+    background: "rgba(20,20,25,0.85)",
+    borderRadius: "10px",
+    padding: "5px",
+    border: "1px solid rgba(255,255,255,0.08)",
+    marginBottom: "25px",
+  },
+
+  button: {
+    padding: "12px 25px",
+    background: "#4f46e5",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "bold",
+    transition: "0.25s",
+  },
+};
+
+/* ---------------------- ANIMATIONS ------------------------- */
+
+const s = document.createElement("style");
+s.textContent = `
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.25); opacity: 0.85; }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.35; }
+  100% { transform: translateY(-1200px); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+`;
+document.head.appendChild(s);

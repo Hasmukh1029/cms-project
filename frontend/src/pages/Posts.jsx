@@ -5,7 +5,6 @@ export default function Posts() {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
 
-  // 🔗 Your Render backend URL
   const API = "https://cms-backend-hgpt.onrender.com";
 
   const loadPosts = async () => {
@@ -17,7 +16,6 @@ export default function Posts() {
     loadPosts();
   }, []);
 
-  // DELETE POST FUNCTION
   const deletePost = async (id) => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
 
@@ -26,9 +24,7 @@ export default function Posts() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // Remove deleted post from UI immediately
       setPosts(posts.filter((p) => p.id !== id));
-
       alert("Post deleted!");
     } catch (err) {
       alert("Failed to delete post");
@@ -36,85 +32,211 @@ export default function Posts() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f0f0f",
-        color: "#fff",
-        padding: "40px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1 style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "30px" }}>
-        📄 All Published Posts
-      </h1>
+    <div style={styles.page}>
+      {/* Background Glow Effects */}
+      <div style={styles.glow1}></div>
+      <div style={styles.glow2}></div>
 
-      {posts.length === 0 ? (
-        <p>No posts found.</p>
-      ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              style={{
-                background: "#1a1a1a",
-                padding: "25px",
-                borderRadius: "12px",
-                border: "1px solid #333",
-              }}
-            >
-              {/* Title */}
-              <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>
-                {post.title}
-              </h2>
+      {/* Floating Particles */}
+      <ul style={styles.particles}>
+        {Array.from({ length: 22 }).map((_, i) => (
+          <li key={i} style={styles.particle}></li>
+        ))}
+      </ul>
 
-              {/* Meta */}
-              <p style={{ opacity: 0.7, marginBottom: "15px" }}>
-                Category: {post.category?.name || "None"} • By{" "}
-                {post.author?.username}
-              </p>
+      <div style={styles.container}>
+        <h1 style={styles.heading}>📄 All Published Posts</h1>
 
-              {/* Content Preview */}
-              <div
-                style={{
-                  background: "#222",
-                  padding: "15px",
-                  borderRadius: "10px",
-                  maxHeight: "200px",
-                  overflow: "hidden",
-                  marginBottom: "15px",
-                }}
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+        {posts.length === 0 ? (
+          <p style={styles.noPosts}>No posts found.</p>
+        ) : (
+          <div style={styles.postsWrapper}>
+            {posts.map((post) => (
+              <div key={post.id} style={styles.postCard}>
+                <h2 style={styles.postTitle}>{post.title}</h2>
 
-              {/* Action Buttons */}
-              <div style={{ display: "flex", gap: "15px" }}>
-                <a
-                  href={`/edit-post/${post.id}`}
-                  style={{
-                    color: "#3a78ff",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                  }}
-                >
-                  ✏️ Edit
-                </a>
+                <p style={styles.meta}>
+                  Category: {post.category?.name || "None"} • By{" "}
+                  {post.author?.username}
+                </p>
 
-                <span
-                  onClick={() => deletePost(post.id)}
-                  style={{
-                    color: "red",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                  }}
-                >
-                  🗑️ Delete
-                </span>
+                <div
+                  style={styles.contentPreview}
+                  dangerouslySetInnerHTML={{ __html: post.content }}
+                />
+
+                <div style={styles.actions}>
+                  <a href={`/edit-post/${post.id}`} style={styles.editBtn}>
+                    ✏️ Edit
+                  </a>
+
+                  <span
+                    onClick={() => deletePost(post.id)}
+                    style={styles.deleteBtn}
+                  >
+                    🗑️ Delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+/* --------------------------- STYLES --------------------------- */
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    width: "100%",
+    background: "#0b0b0d",
+    color: "#fff",
+    padding: "40px",
+    position: "relative",
+    overflowX: "hidden",
+    fontFamily: "Arial, sans-serif",
+  },
+
+  glow1: {
+    position: "absolute",
+    width: "550px",
+    height: "550px",
+    background: "radial-gradient(circle, rgba(80,80,255,0.22), transparent 70%)",
+    borderRadius: "50%",
+    top: "-150px",
+    left: "-160px",
+    filter: "blur(70px)",
+    animation: "pulse 14s infinite alternate",
+    zIndex: 0,
+  },
+
+  glow2: {
+    position: "absolute",
+    width: "520px",
+    height: "520px",
+    background:
+      "radial-gradient(circle, rgba(0,200,255,0.18), transparent 70%)",
+    borderRadius: "50%",
+    bottom: "-160px",
+    right: "-170px",
+    filter: "blur(70px)",
+    animation: "pulse 16s infinite alternate-reverse",
+    zIndex: 0,
+  },
+
+  particles: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+    overflow: "hidden",
+    zIndex: 1,
+  },
+
+  particle: {
+    position: "absolute",
+    width: "6px",
+    height: "6px",
+    borderRadius: "50%",
+    background: "rgba(255,255,255,0.18)",
+    animation: "floatUp 14s linear infinite",
+  },
+
+  container: {
+    position: "relative",
+    zIndex: 5,
+    animation: "fadeIn 1.2s ease",
+  },
+
+  heading: {
+    fontSize: "32px",
+    fontWeight: "bold",
+    marginBottom: "30px",
+  },
+
+  noPosts: {
+    opacity: 0.7,
+    fontSize: "18px",
+  },
+
+  postsWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "25px",
+  },
+
+  postCard: {
+    background: "rgba(30,30,35,0.65)",
+    padding: "25px",
+    borderRadius: "14px",
+    border: "1px solid rgba(255,255,255,0.08)",
+    boxShadow: "0 0 20px rgba(0,0,0,0.6)",
+    backdropFilter: "blur(8px)",
+  },
+
+  postTitle: {
+    fontSize: "24px",
+    marginBottom: "10px",
+    fontWeight: 700,
+  },
+
+  meta: {
+    opacity: 0.7,
+    marginBottom: "15px",
+    fontSize: "14px",
+  },
+
+  contentPreview: {
+    background: "rgba(40,40,45,0.6)",
+    padding: "15px",
+    borderRadius: "10px",
+    maxHeight: "200px",
+    overflow: "hidden",
+    border: "1px solid rgba(255,255,255,0.05)",
+    marginBottom: "15px",
+  },
+
+  actions: {
+    display: "flex",
+    gap: "20px",
+  },
+
+  editBtn: {
+    color: "#3a78ff",
+    fontWeight: "bold",
+    cursor: "pointer",
+    textDecoration: "none",
+  },
+
+  deleteBtn: {
+    color: "#ff4444",
+    fontWeight: "bold",
+    cursor: "pointer",
+  },
+};
+
+/* --------------------------- ANIMATIONS --------------------------- */
+
+const styleEl = document.createElement("style");
+styleEl.textContent = `
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.25); opacity: 0.85; }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.35; }
+  100% { transform: translateY(-1200px); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(25px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+`;
+document.head.appendChild(styleEl);
