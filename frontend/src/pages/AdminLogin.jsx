@@ -7,10 +7,10 @@ export default function AdminLogin() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("https://cms-backend-hgpt.onrender.com/api/auth/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        "https://cms-backend-hgpt.onrender.com/api/auth/login",
+        { username, password }
+      );
 
       localStorage.setItem("token", res.data.token);
       window.location.href = "/dashboard";
@@ -21,6 +21,19 @@ export default function AdminLogin() {
 
   return (
     <div style={styles.page}>
+
+      {/* Glowing background effects */}
+      <div style={styles.glow1}></div>
+      <div style={styles.glow2}></div>
+
+      {/* Floating particles */}
+      <ul style={styles.particles}>
+        {Array.from({ length: 14 }).map((_, i) => (
+          <li key={i} style={styles.particle}></li>
+        ))}
+      </ul>
+
+      {/* Card */}
       <div style={styles.card}>
         <h2 style={styles.title}>CMS Admin Login</h2>
 
@@ -42,9 +55,8 @@ export default function AdminLogin() {
           Login
         </button>
 
-        {/* Register New Admin Link */}
         <div style={{ marginTop: "15px", textAlign: "center" }}>
-          <a href="/admin-register" style={{ color: "#aaa", fontSize: "14px" }}>
+          <a href="/admin-register" style={styles.registerLink}>
             Register New Admin →
           </a>
         </div>
@@ -55,36 +67,94 @@ export default function AdminLogin() {
 
 const styles = {
   page: {
-    background: "#0d0d0f",
-    color: "white",
     height: "100vh",
+    width: "100vw",
+    background: "#0b0b0d",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
+    overflow: "hidden",
+    color: "#fff",
   },
+
+  /* Glowing soft gradient blobs */
+  glow1: {
+    position: "absolute",
+    width: "500px",
+    height: "500px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(80,80,255,0.22), transparent 70%)",
+    top: "-150px",
+    left: "-150px",
+    animation: "pulse 14s infinite alternate",
+    filter: "blur(60px)",
+    zIndex: 1,
+  },
+
+  glow2: {
+    position: "absolute",
+    width: "450px",
+    height: "450px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(0,200,255,0.18), transparent 70%)",
+    bottom: "-150px",
+    right: "-150px",
+    animation: "pulse 16s infinite alternate-reverse",
+    filter: "blur(60px)",
+    zIndex: 1,
+  },
+
+  particles: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+    zIndex: 2,
+    overflow: "hidden",
+  },
+
+  particle: {
+    position: "absolute",
+    width: "6px",
+    height: "6px",
+    borderRadius: "50%",
+    background: "rgba(255,255,255,0.18)",
+    animation: "floatUp 14s linear infinite",
+  },
+
   card: {
-    background: "#1a1a1d",
+    background: "rgba(20, 20, 25, 0.65)",
     padding: "40px",
-    borderRadius: "12px",
-    width: "350px",
-    boxShadow: "0 0 20px rgba(0,0,0,0.5)",
+    borderRadius: "14px",
+    width: "360px",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 0 25px rgba(0,0,0,0.7)",
+    zIndex: 5,
+    animation: "fadeIn 1.2s ease",
   },
+
   title: {
     marginBottom: "25px",
     fontSize: "26px",
     textAlign: "center",
-    letterSpacing: "1px",
+    fontWeight: 700,
   },
+
   input: {
     width: "100%",
     padding: "12px",
     borderRadius: "8px",
     marginBottom: "15px",
-    border: "none",
-    background: "#2a2a2d",
+    border: "1px solid #333",
+    background: "rgba(35,35,40,0.75)",
     color: "white",
     fontSize: "15px",
+    transition: "0.25s",
   },
+
   button: {
     width: "100%",
     padding: "12px",
@@ -95,6 +165,33 @@ const styles = {
     fontSize: "16px",
     cursor: "pointer",
     marginTop: "10px",
-    transition: "0.2s",
-  }
+    transition: "0.25s",
+  },
+
+  registerLink: {
+    color: "#aaa",
+    fontSize: "14px",
+    textDecoration: "none",
+    transition: "0.25s",
+  },
 };
+
+/* ANIMATIONS */
+const styleElement = document.createElement("style");
+styleElement.textContent = `
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.25); opacity: 0.85; }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.4; }
+  100% { transform: translateY(-1200px); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(25px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+`;
+document.head.appendChild(styleElement);
