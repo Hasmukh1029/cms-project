@@ -11,17 +11,19 @@ export default function CreatePost() {
 
   const token = localStorage.getItem("token");
 
+  // Load categories (FROM RENDER BACKEND)
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/categories")
+      .get("https://cms-backend-hgpt.onrender.com/api/categories")
       .then((res) => setCategories(res.data))
       .catch((err) => console.log(err));
   }, []);
 
+  // Create post (SEND TO RENDER BACKEND)
   const createPost = async () => {
     try {
       await axios.post(
-        "http://localhost:4000/api/posts",
+        "https://cms-backend-hgpt.onrender.com/api/posts",
         { title, content, status: "published", categoryId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -40,7 +42,7 @@ export default function CreatePost() {
         backgroundColor: "#0f0f0f",
         color: "white",
         padding: "40px 0",
-        fontFamily: "Arial, sans-serif"
+        fontFamily: "Arial, sans-serif",
       }}
     >
       <div
@@ -50,7 +52,7 @@ export default function CreatePost() {
           backgroundColor: "#181818",
           padding: "30px",
           borderRadius: "12px",
-          boxShadow: "0 0 20px rgba(0,0,0,0.5)"
+          boxShadow: "0 0 20px rgba(0,0,0,0.5)",
         }}
       >
         <h2 style={{ marginBottom: "20px", fontSize: "28px", color: "#ffffff" }}>
@@ -69,7 +71,7 @@ export default function CreatePost() {
             border: "1px solid #333",
             marginBottom: "15px",
             backgroundColor: "#121212",
-            color: "white"
+            color: "white",
           }}
         />
 
@@ -83,7 +85,7 @@ export default function CreatePost() {
             border: "1px solid #333",
             marginBottom: "15px",
             backgroundColor: "#121212",
-            color: "white"
+            color: "white",
           }}
         >
           <option value="">Choose Category</option>
@@ -100,7 +102,7 @@ export default function CreatePost() {
             borderRadius: "8px",
             padding: "5px",
             border: "1px solid #333",
-            marginBottom: "20px"
+            marginBottom: "20px",
           }}
         >
           <ReactQuill
@@ -122,7 +124,7 @@ export default function CreatePost() {
             color: "white",
             fontSize: "16px",
             fontWeight: "bold",
-            transition: "0.3s"
+            transition: "0.3s",
           }}
         >
           Publish Post

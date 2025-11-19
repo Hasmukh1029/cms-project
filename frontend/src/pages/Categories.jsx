@@ -7,8 +7,10 @@ export default function Categories() {
 
   const token = localStorage.getItem("token");
 
+  const baseURL = "https://cms-backend-hgpt.onrender.com";
+
   const loadCategories = async () => {
-    const res = await axios.get("http://localhost:4000/api/categories");
+    const res = await axios.get(`${baseURL}/api/categories`);
     setCategories(res.data);
   };
 
@@ -16,7 +18,7 @@ export default function Categories() {
     if (!name.trim()) return alert("Category name required");
 
     await axios.post(
-      "http://localhost:4000/api/categories",
+      `${baseURL}/api/categories`,
       { name },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -26,15 +28,15 @@ export default function Categories() {
   };
 
   const deleteCategory = async (id) => {
-    if (!confirm("Are you sure you want to delete this category?")) return;
+    if (!confirm("Are you sure you want to delete this?")) return;
 
     try {
-      await axios.delete(`http://localhost:4000/api/categories/${id}`, {
+      await axios.delete(`${baseURL}/api/categories/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       loadCategories();
-    } catch (err) {
+    } catch {
       alert("Error deleting category");
     }
   };
@@ -44,20 +46,18 @@ export default function Categories() {
   }, []);
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "40px",
-        background: "#0f0f0f",
-        color: "#fff",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
+    <div style={{
+      minHeight: "100vh",
+      padding: "40px",
+      background: "#0f0f0f",
+      color: "#fff",
+      fontFamily: "Arial, sans-serif",
+    }}>
       <h1 style={{ marginBottom: "20px", fontSize: "32px", fontWeight: "bold" }}>
         Manage Categories
       </h1>
 
-      {/* Add Category Box */}
+      {/* Add Category */}
       <div
         style={{
           background: "#1a1a1a",
@@ -102,47 +102,40 @@ export default function Categories() {
         </button>
       </div>
 
-      {/* Category List */}
-      <h2 style={{ marginBottom: "15px" }}>Existing Categories</h2>
+      {/* Existing Categories */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+        {categories.map(cat => (
+          <div
+            key={cat.id}
+            style={{
+              background: "#1a1a1a",
+              padding: "20px",
+              borderRadius: "10px",
+              width: "250px",
+              border: "1px solid #333",
+            }}
+          >
+            <h3>{cat.name}</h3>
+            <p style={{ opacity: 0.7 }}>ID: {cat.id}</p>
 
-      {categories.length === 0 ? (
-        <p>No categories added yet.</p>
-      ) : (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-          {categories.map((cat) => (
-            <div
-              key={cat.id}
+            <button
+              onClick={() => deleteCategory(cat.id)}
               style={{
-                background: "#1a1a1a",
-                padding: "20px",
-                borderRadius: "10px",
-                width: "250px",
-                border: "1px solid #333",
+                background: "#ff3b3b",
+                border: "none",
+                padding: "10px 15px",
+                borderRadius: "8px",
+                cursor: "pointer",
+                color: "#fff",
+                fontWeight: "bold",
+                width: "100%",
               }}
             >
-              <h3 style={{ marginBottom: "10px" }}>{cat.name}</h3>
-              <p style={{ opacity: 0.7, marginBottom: "15px" }}>ID: {cat.id}</p>
-
-              <button
-                onClick={() => deleteCategory(cat.id)}
-                style={{
-                  background: "#ff3b3b",
-                  border: "none",
-                  padding: "10px 15px",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  color: "#fff",
-                  fontWeight: "bold",
-                  fontSize: "14px",
-                  width: "100%",
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

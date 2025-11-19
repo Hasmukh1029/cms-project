@@ -7,7 +7,7 @@ export default function AdminLogin() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/api/auth/login", {
+      const res = await axios.post("https://cms-backend-hgpt.onrender.com/api/auth/login", {
         username,
         password,
       });
@@ -42,7 +42,7 @@ export default function AdminLogin() {
           Login
         </button>
 
-        {/* ✔ FIXED — Register New Admin */}
+        {/* Register New Admin Link */}
         <div style={{ marginTop: "15px", textAlign: "center" }}>
           <a href="/admin-register" style={{ color: "#aaa", fontSize: "14px" }}>
             Register New Admin →

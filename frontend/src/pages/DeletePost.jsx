@@ -9,9 +9,12 @@ export default function DeletePost() {
   useEffect(() => {
     const deletePost = async () => {
       try {
-        await axios.delete(`http://localhost:4000/api/posts/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await axios.delete(
+          `https://cms-backend-hgpt.onrender.com/api/posts/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
 
         alert("Post deleted!");
         window.location.href = "/posts";
@@ -25,6 +28,6 @@ export default function DeletePost() {
   }, [id, token]);
 
   return (
-    <h2 style={{ padding: "20px" }}>Deleting post...</h2>
+    <h2 style={{ padding: "20px", color: "white" }}>Deleting post...</h2>
   );
 }

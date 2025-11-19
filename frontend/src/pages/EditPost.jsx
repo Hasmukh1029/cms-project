@@ -8,20 +8,22 @@ export default function EditPost() {
   const { id } = useParams();
   const token = localStorage.getItem("token");
 
+  const API = "https://cms-backend-hgpt.onrender.com"; // ✅ Render backend URL
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [categories, setCategories] = useState([]);
 
-  // 👉 Load categories + existing post details
+  // 👉 Load categories + existing post
   useEffect(() => {
-    axios.get("http://localhost:4000/api/categories")
+    axios.get(`${API}/api/categories`)
       .then(res => setCategories(res.data));
 
-    axios.get(`http://localhost:4000/api/posts/${id}`)
+    axios.get(`${API}/api/posts/${id}`)
       .then(res => {
         setTitle(res.data.title);
-        setContent(res.data.content); // FIX: Load into editor properly
+        setContent(res.data.content);
         setCategoryId(res.data.categoryId || "");
       });
   }, [id]);
@@ -30,12 +32,12 @@ export default function EditPost() {
   const updatePost = async () => {
     try {
       await axios.put(
-        `http://localhost:4000/api/posts/${id}`,
+        `${API}/api/posts/${id}`,
         { 
           title, 
           content, 
-          categoryId: Number(categoryId),   // FIX: backend expects number
-          status: "published"               // FIX: Prisma update requires this if missing
+          categoryId: Number(categoryId),
+          status: "published"
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -55,7 +57,7 @@ export default function EditPost() {
 
     try {
       await axios.delete(
-        `http://localhost:4000/api/posts/${id}`,
+        `${API}/api/posts/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -90,6 +92,7 @@ export default function EditPost() {
           border: "1px solid #333",
         }}
       >
+
         {/* Title */}
         <label style={{ fontWeight: "bold", fontSize: "18px" }}>Title</label>
         <input
@@ -139,7 +142,7 @@ export default function EditPost() {
             onChange={setContent}
             style={{
               height: "250px",
-              color: "#000",  // FIX: Visible text
+              color: "#000",
             }}
           />
         </div>

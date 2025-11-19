@@ -5,7 +5,7 @@ export default function PublicPosts() {
   const [posts, setPosts] = useState([]);
 
   const loadPosts = async () => {
-    const res = await axios.get("http://localhost:4000/api/posts");
+    const res = await axios.get("https://cms-backend-hgpt.onrender.com/api/posts");
     setPosts(res.data);
   };
 
@@ -58,7 +58,7 @@ export default function PublicPosts() {
                 {post.author?.username}
               </p>
 
-              {/* Show only first 200 characters */}
+              {/* Preview */}
               <div
                 style={{
                   background: "#222",

@@ -5,7 +5,7 @@ export default function PublicHome() {
   const [posts, setPosts] = useState([]);
 
   const loadPosts = async () => {
-    const res = await axios.get("http://localhost:4000/api/posts");
+    const res = await axios.get("https://cms-backend-hgpt.onrender.com/api/posts");
     setPosts(res.data);
   };
 

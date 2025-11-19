@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export default function Dashboard() {
   const token = localStorage.getItem("token");
 
-  // Redirect to login if not logged in
+  // Redirect to home if not logged in
   useEffect(() => {
     if (!token) {
       window.location.href = "/";
@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   const logout = () => {
     localStorage.removeItem("token");
-    window.location.reload(); // refresh to apply redirect
+    window.location.href = "/"; // redirect to homepage
   };
 
   return (
@@ -35,7 +35,9 @@ export default function Dashboard() {
           borderBottom: "1px solid #333",
         }}
       >
-        <h2 style={{ fontSize: "24px", fontWeight: "bold" }}>Admin Dashboard</h2>
+        <h2 style={{ fontSize: "24px", fontWeight: "bold" }}>
+          Admin Dashboard
+        </h2>
 
         <button
           onClick={logout}
@@ -56,7 +58,9 @@ export default function Dashboard() {
 
       {/* MAIN CONTENT */}
       <div style={{ padding: "40px" }}>
-        <h1 style={{ marginBottom: "30px", fontSize: "32px" }}>Welcome Back 👋</h1>
+        <h1 style={{ marginBottom: "30px", fontSize: "32px" }}>
+          Welcome Back 👋
+        </h1>
 
         <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
           <a

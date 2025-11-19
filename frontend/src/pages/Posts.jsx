@@ -5,8 +5,11 @@ export default function Posts() {
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem("token");
 
+  // 🔗 Your Render backend URL
+  const API = "https://cms-backend-hgpt.onrender.com";
+
   const loadPosts = async () => {
-    const res = await axios.get("http://localhost:4000/api/posts");
+    const res = await axios.get(`${API}/api/posts`);
     setPosts(res.data);
   };
 
@@ -19,11 +22,11 @@ export default function Posts() {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
 
     try {
-      await axios.delete(`http://localhost:4000/api/posts/${id}`, {
+      await axios.delete(`${API}/api/posts/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // Remove the deleted post from UI
+      // Remove deleted post from UI immediately
       setPosts(posts.filter((p) => p.id !== id));
 
       alert("Post deleted!");

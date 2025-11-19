@@ -7,13 +7,13 @@ export default function AdminRegister() {
 
   const handleRegister = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/api/auth/register", {
+      const res = await axios.post("https://cms-backend-hgpt.onrender.com/api/auth/register", {
         username,
         password,
       });
 
       alert("Admin registered successfully!");
-      window.location.href = "/admin-login"; // Go back to login page
+      window.location.href = "/admin-login";
     } catch (err) {
       alert(err.response?.data?.error || "Registration failed");
     }
@@ -42,14 +42,14 @@ export default function AdminRegister() {
           Register
         </button>
 
-        <a 
+        <a
           href="/admin-login"
           style={{
             color: "#ccc",
             display: "block",
             marginTop: "15px",
             textAlign: "center",
-            textDecoration: "none"
+            textDecoration: "none",
           }}
         >
           Already have an account? Login
