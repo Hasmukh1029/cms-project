@@ -1,42 +1,25 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const prisma = require("../prismaClient");
 require("dotenv").config();
 
-// REGISTER (normal user)
-router.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+module.exports = (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-  const exists = await prisma.user.findUnique({ where: { username } });
-  if (exists) return res.status(400).json({ error: "User exists" });
+  if (!authHeader)
+    return res.status(401).json({ error: "No token provided" });
 
-  const hashed = await bcrypt.hash(password, 10);
+  const token = authHeader.split(" ")[1]; // Bearer TOKEN
 
-  const user = await prisma.user.create({
-    data: { username, password: hashed, role: "user" }
-  });
+  if (!token)
+    return res.status(401).json({ error: "Invalid token format" });
 
-  res.json({ message: "User registered" });
-});
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-// LOGIN (normal + admin)
-router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+    // attach user to request
+    req.user = decoded;
 
-  const user = await prisma.user.findUnique({ where: { username } });
-  if (!user) return res.status(400).json({ error: "Invalid credentials" });
-
-  const ok = await bcrypt.compare(password, user.password);
-  if (!ok) return res.status(400).json({ error: "Invalid credentials" });
-
-  const token = jwt.sign(
-    { id: user.id, username: user.username, role: user.role },
-    process.env.JWT_SECRET
-  );
-
-  res.json({ token, role: user.role });
-});
-
-module.exports = router;
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: "Token invalid" });
+  }
+};
