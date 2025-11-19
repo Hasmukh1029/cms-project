@@ -1,26 +1,27 @@
+import forest from "../assets/forest.jpg";
+
 export default function HomePage() {
   return (
-    <div style={styles.page}>
+    <div style={{ ...styles.page, backgroundImage: `url(${forest})` }}>
 
-      {/* Animated Glow Layers */}
-      <div style={styles.glowLayer1}></div>
-      <div style={styles.glowLayer2}></div>
+      {/* Dark overlay for readability */}
+      <div style={styles.darkOverlay}></div>
 
-      {/* Diagonal Light Beams */}
-      <div style={styles.lightBeam1}></div>
-      <div style={styles.lightBeam2}></div>
+      {/* Slow zoom cinematic animation */}
+      <div style={{ ...styles.bgAnimator, backgroundImage: `url(${forest})` }}></div>
 
-      {/* Noise Texture */}
-      <div style={styles.noise}></div>
+      {/* Optional glowing gradients */}
+      <div style={styles.glow1}></div>
+      <div style={styles.glow2}></div>
 
-      {/* Floating Parallax Particles */}
+      {/* Floating particles */}
       <ul style={styles.particles}>
-        {Array.from({ length: 18 }).map((_, i) => (
+        {Array.from({ length: 16 }).map((_, i) => (
           <li key={i} style={styles.particle}></li>
         ))}
       </ul>
 
-      {/* Card */}
+      {/* Main card */}
       <div style={styles.card}>
         <h2 style={styles.title}>Welcome to CMS</h2>
 
@@ -42,169 +43,142 @@ export default function HomePage() {
 
 const styles = {
   page: {
-    background: "#0b0b0d",
-    color: "white",
     height: "100vh",
     width: "100vw",
-    overflow: "hidden",
-    position: "relative",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
+    overflow: "hidden",
+    color: "white",
   },
 
-  /* Rotating gradient blobs */
-  glowLayer1: {
+  darkOverlay: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.60)",
+    backdropFilter: "blur(2px)",
+    zIndex: 1,
+  },
+
+  bgAnimator: {
+    position: "absolute",
+    width: "110%",
+    height: "110%",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    animation: "slowZoom 35s ease-in-out infinite",
+    opacity: 0.3,
+    zIndex: 0,
+  },
+
+  glow1: {
     position: "absolute",
     width: "600px",
     height: "600px",
     borderRadius: "50%",
-    background: "radial-gradient(circle, rgba(80,80,255,0.18), transparent 70%)",
-    top: "-150px",
+    background: "radial-gradient(circle, rgba(80,80,255,0.25), transparent 70%)",
+    top: "-180px",
     left: "-150px",
-    animation: "rotateSlow 40s linear infinite",
-    filter: "blur(40px)",
+    filter: "blur(50px)",
     zIndex: 1,
   },
-
-  glowLayer2: {
+  glow2: {
     position: "absolute",
     width: "500px",
     height: "500px",
     borderRadius: "50%",
-    background: "radial-gradient(circle, rgba(0,200,255,0.15), transparent 70%)",
-    bottom: "-120px",
-    right: "-120px",
-    animation: "rotateSlowReverse 45s linear infinite",
-    filter: "blur(35px)",
+    background: "radial-gradient(circle, rgba(0,200,255,0.20), transparent 70%)",
+    bottom: "-180px",
+    right: "-150px",
+    filter: "blur(50px)",
     zIndex: 1,
   },
 
-  /* Diagonal light streaks */
-  lightBeam1: {
-    position: "absolute",
-    top: 0,
-    left: "-30%",
-    width: "200%",
-    height: "100%",
-    background: "linear-gradient(120deg, rgba(255,255,255,0.03), transparent 70%)",
-    animation: "slideDiagonal 18s linear infinite",
-    zIndex: 1,
-  },
-
-  lightBeam2: {
-    position: "absolute",
-    top: 0,
-    left: "-30%",
-    width: "200%",
-    height: "100%",
-    background: "linear-gradient(120deg, transparent, rgba(255,255,255,0.04), transparent)",
-    animation: "slideDiagonal 30s linear infinite reverse",
-    zIndex: 1,
-  },
-
-  /* Noise texture overlay */
-  noise: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    zIndex: 1,
-    opacity: 0.08,
-    background:
-      "url('https://www.transparenttextures.com/patterns/asfalt-light.png')",
-    pointerEvents: "none",
-  },
-
-  /* Parallax particles */
   particles: {
     position: "absolute",
     width: "100%",
     height: "100%",
     listStyle: "none",
-    margin: 0,
     padding: 0,
+    margin: 0,
     overflow: "hidden",
     zIndex: 2,
   },
 
   particle: {
     position: "absolute",
-    width: "6px",
-    height: "6px",
+    width: "5px",
+    height: "5px",
     borderRadius: "50%",
     background: "rgba(255,255,255,0.15)",
-    boxShadow: "0 0 8px rgba(150,150,255,0.5)",
-    animation: "floatParticle 16s linear infinite",
+    animation: "floatUp 12s linear infinite",
   },
 
   card: {
-    background: "rgba(20, 20, 25, 0.75)",
+    background: "rgba(15, 15, 20, 0.65)",
     padding: "40px",
-    borderRadius: "14px",
     width: "360px",
+    borderRadius: "14px",
     backdropFilter: "blur(10px)",
-    boxShadow: "0 0 25px rgba(0,0,0,0.55)",
+    boxShadow: "0 0 25px rgba(0,0,0,0.7)",
     zIndex: 5,
     animation: "fadeIn 1.2s ease",
   },
 
   title: {
+    textAlign: "center",
     marginBottom: "25px",
     fontSize: "28px",
-    textAlign: "center",
+    fontWeight: 700,
   },
 
   subtitle: {
     textAlign: "center",
+    opacity: 0.85,
     marginBottom: "20px",
-    opacity: 0.8,
   },
 
   button: {
     display: "block",
-    width: "100%",
+    textAlign: "center",
+    background: "#4f46e5",
     padding: "12px",
     borderRadius: "8px",
-    background: "#4f46e5",
-    textAlign: "center",
+    marginBottom: "15px",
+    color: "white",
     textDecoration: "none",
-    color: "#fff",
-    marginBottom: "14px",
+    fontWeight: 600,
   },
 
   secondaryButton: {
     display: "block",
-    width: "100%",
+    textAlign: "center",
+    background: "#2e2e34",
     padding: "12px",
     borderRadius: "8px",
-    background: "#2c2c31",
-    border: "1px solid #444",
-    textAlign: "center",
+    color: "white",
     textDecoration: "none",
-    color: "#fff",
+    border: "1px solid #444",
+    fontWeight: 600,
   },
 };
 
-/* Inject Animations */
-const styleEl = document.createElement("style");
-styleEl.textContent = `
-@keyframes rotateSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* ANIMATIONS */
+const s = document.createElement("style");
+s.textContent = `
+@keyframes slowZoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 
-@keyframes rotateSlowReverse {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
-@keyframes slideDiagonal {
-  0% { transform: translateX(-20%) translateY(0); }
-  100% { transform: translateX(20%) translateY(0); }
-}
-
-@keyframes floatParticle {
-  0% { transform: translateY(0); opacity: 0.3; }
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.4; }
   100% { transform: translateY(-1200px); opacity: 0; }
 }
 
@@ -213,4 +187,4 @@ styleEl.textContent = `
   to { opacity: 1; transform: translateY(0); }
 }
 `;
-document.head.appendChild(styleEl);
+document.head.appendChild(s);
