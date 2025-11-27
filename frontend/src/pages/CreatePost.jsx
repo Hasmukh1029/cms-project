@@ -33,8 +33,61 @@ export default function CreatePost() {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div style={styles.page}>
+
+      {/* ✅ TOP NAV BAR (FUNCTIONAL ONLY — NO DESIGN CHANGE) */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "25px",
+          position: "relative",
+          zIndex: 6,
+          padding: "0 40px",
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Create New Post</h2>
+
+        <div style={{ display: "flex", gap: "12px" }}>
+          <a
+            href="/dashboard"
+            style={{
+              background: "#3a78ff",
+              padding: "10px 18px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            ← Dashboard
+          </a>
+
+          <button
+            onClick={logout}
+            style={{
+              background: "#d9534f",
+              padding: "10px 18px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
 
       {/* Ambient Background Glow */}
       <div style={styles.glow1}></div>
@@ -48,7 +101,6 @@ export default function CreatePost() {
       </ul>
 
       <div style={styles.container}>
-        <h2 style={styles.heading}>Create New Post</h2>
 
         {/* Title */}
         <input

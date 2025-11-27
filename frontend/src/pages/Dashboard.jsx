@@ -16,7 +16,6 @@ export default function Dashboard() {
 
   return (
     <div style={styles.page}>
-
       {/* Glowing ambient lights */}
       <div style={styles.glow1}></div>
       <div style={styles.glow2}></div>
@@ -32,9 +31,23 @@ export default function Dashboard() {
       <div style={styles.navbar}>
         <h2 style={styles.navTitle}>Admin Dashboard</h2>
 
-        <button onClick={logout} style={styles.logoutButton}>
-          Logout
-        </button>
+        {/* ✅ Navigation + Logout */}
+        <div style={{ display: "flex", gap: "12px" }}>
+          <a
+            href="/public-home"
+            style={{
+              ...styles.logoutButton,
+              background: "#3a78ff",
+              textDecoration: "none",
+            }}
+          >
+            Go to Blog
+          </a>
+
+          <button onClick={logout} style={styles.logoutButton}>
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* MAIN BODY */}

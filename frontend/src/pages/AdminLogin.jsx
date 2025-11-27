@@ -4,6 +4,7 @@ import axios from "axios";
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const token = localStorage.getItem("token");
 
   const handleLogin = async () => {
     try {
@@ -19,8 +20,60 @@ export default function AdminLogin() {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div style={styles.page}>
+
+      {/* ✅ TOP NAV BAR (FUNCTIONAL ONLY — NO DESIGN CHANGE) */}
+      <div
+        style={{
+          position: "absolute",
+          top: "25px",
+          right: "35px",
+          display: "flex",
+          gap: "10px",
+          zIndex: 10,
+        }}
+      >
+        {token && (
+          <a
+            href="/dashboard"
+            style={{
+              background: "#3a78ff",
+              padding: "9px 16px",
+              borderRadius: "8px",
+              color: "#fff",
+              textDecoration: "none",
+              fontWeight: "bold",
+              fontSize: "13px",
+            }}
+          >
+            ← Dashboard
+          </a>
+        )}
+
+        {token && (
+          <button
+            onClick={logout}
+            style={{
+              background: "#d9534f",
+              padding: "9px 16px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "13px",
+            }}
+          >
+            Logout
+          </button>
+        )}
+      </div>
 
       {/* Glowing background effects */}
       <div style={styles.glow1}></div>
@@ -78,7 +131,6 @@ const styles = {
     color: "#fff",
   },
 
-  /* Glowing soft gradient blobs */
   glow1: {
     position: "absolute",
     width: "500px",

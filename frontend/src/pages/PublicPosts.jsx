@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function PublicPosts() {
   const [posts, setPosts] = useState([]);
+  const token = localStorage.getItem("token");
 
   const loadPosts = async () => {
     const res = await axios.get("https://cms-backend-hgpt.onrender.com/api/posts");
@@ -12,6 +13,11 @@ export default function PublicPosts() {
   useEffect(() => {
     loadPosts();
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
 
   return (
     <div
@@ -23,19 +29,86 @@ export default function PublicPosts() {
         fontFamily: "Arial, sans-serif",
       }}
     >
-      <h1
+      {/* ✅ TOP NAV BAR (FUNCTIONAL ONLY — NO DESIGN CHANGE) */}
+      <div
         style={{
-          fontSize: "34px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
           marginBottom: "25px",
-          fontWeight: "bold",
-          textAlign: "center",
         }}
       >
-        📰 Public Blog
-      </h1>
+        <h1
+          style={{
+            fontSize: "34px",
+            marginBottom: "0",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          📰 Public Blog
+        </h1>
+
+        <div style={{ display: "flex", gap: "12px" }}>
+          {token && (
+            <a
+              href="/dashboard"
+              style={{
+                background: "#3a78ff",
+                padding: "10px 18px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "14px",
+              }}
+            >
+              ← Dashboard
+            </a>
+          )}
+
+          {token && (
+            <button
+              onClick={logout}
+              style={{
+                background: "#d9534f",
+                padding: "10px 18px",
+                borderRadius: "8px",
+                border: "none",
+                cursor: "pointer",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "14px",
+              }}
+            >
+              Logout
+            </button>
+          )}
+
+          {!token && (
+            <a
+              href="/"
+              style={{
+                background: "#2c2c31",
+                padding: "10px 18px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                color: "#fff",
+                border: "1px solid #444",
+                fontWeight: "bold",
+                fontSize: "14px",
+              }}
+            >
+              Home
+            </a>
+          )}
+        </div>
+      </div>
 
       {posts.length === 0 ? (
-        <p style={{ textAlign: "center", opacity: 0.7 }}>No posts available.</p>
+        <p style={{ textAlign: "center", opacity: 0.7 }}>
+          No posts available.
+        </p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
           {posts.map((post) => (

@@ -1,6 +1,42 @@
 export default function HomePage() {
+  const token = localStorage.getItem("token");
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div style={styles.page}>
+
+      {/* ✅ TOP NAVIGATION BAR (ADDED WITHOUT CHANGING DESIGN) */}
+      <div style={styles.topNav}>
+        <div style={{ fontWeight: "bold" }}>CMS</div>
+
+        <div style={{ display: "flex", gap: "12px" }}>
+          {token && (
+            <a href="/dashboard" style={styles.navBtn}>
+              Dashboard
+            </a>
+          )}
+
+          {token && (
+            <button onClick={logout} style={styles.logoutBtn}>
+              Logout
+            </button>
+          )}
+
+          {!token && (
+            <a href="/admin-login" style={styles.navBtn}>
+              Admin Login
+            </a>
+          )}
+
+          <a href="/public-home" style={styles.navBtnAlt}>
+            Blog
+          </a>
+        </div>
+      </div>
 
       {/* Animated Glow Layers */}
       <div style={styles.glowLayer1}></div>
@@ -24,9 +60,7 @@ export default function HomePage() {
       <div style={styles.card}>
         <h2 style={styles.title}>Welcome to CMS</h2>
 
-        <p style={styles.subtitle}>
-          Choose how you want to continue
-        </p>
+        <p style={styles.subtitle}>Choose how you want to continue</p>
 
         <a href="/admin-login" style={styles.button}>
           Admin Login
@@ -51,6 +85,54 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  /* ✅ TOP NAV BAR STYLES (MINIMAL, MATCHES THEME) */
+  topNav: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    padding: "14px 30px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    background: "rgba(15,15,20,0.6)",
+    backdropFilter: "blur(10px)",
+    zIndex: 10,
+    fontSize: "14px",
+  },
+
+  navBtn: {
+    background: "#3a78ff",
+    padding: "8px 14px",
+    borderRadius: "7px",
+    textDecoration: "none",
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: "13px",
+  },
+
+  navBtnAlt: {
+    background: "#2c2c31",
+    padding: "8px 14px",
+    borderRadius: "7px",
+    textDecoration: "none",
+    color: "#fff",
+    border: "1px solid #444",
+    fontWeight: "bold",
+    fontSize: "13px",
+  },
+
+  logoutBtn: {
+    background: "#d9534f",
+    padding: "8px 14px",
+    borderRadius: "7px",
+    border: "none",
+    cursor: "pointer",
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: "13px",
   },
 
   /* Rotating gradient blobs */
@@ -87,7 +169,8 @@ const styles = {
     left: "-30%",
     width: "200%",
     height: "100%",
-    background: "linear-gradient(120deg, rgba(255,255,255,0.03), transparent 70%)",
+    background:
+      "linear-gradient(120deg, rgba(255,255,255,0.03), transparent 70%)",
     animation: "slideDiagonal 18s linear infinite",
     zIndex: 1,
   },
@@ -98,12 +181,12 @@ const styles = {
     left: "-30%",
     width: "200%",
     height: "100%",
-    background: "linear-gradient(120deg, transparent, rgba(255,255,255,0.04), transparent)",
+    background:
+      "linear-gradient(120deg, transparent, rgba(255,255,255,0.04), transparent)",
     animation: "slideDiagonal 30s linear infinite reverse",
     zIndex: 1,
   },
 
-  /* Noise texture overlay */
   noise: {
     position: "absolute",
     width: "100%",
@@ -115,7 +198,6 @@ const styles = {
     pointerEvents: "none",
   },
 
-  /* Parallax particles */
   particles: {
     position: "absolute",
     width: "100%",

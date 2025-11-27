@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function PublicHome() {
   const [posts, setPosts] = useState([]);
+  const token = localStorage.getItem("token");
 
   const loadPosts = async () => {
     const res = await axios.get("https://cms-backend-hgpt.onrender.com/api/posts");
@@ -13,8 +14,82 @@ export default function PublicHome() {
     loadPosts();
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div style={styles.page}>
+
+      {/* ✅ TOP NAV BAR (FUNCTIONAL ONLY — NO DESIGN CHANGE) */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "30px",
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
+        <h1 style={styles.heading}>📰 Blog Homepage</h1>
+
+        <div style={{ display: "flex", gap: "12px" }}>
+          {token && (
+            <a
+              href="/dashboard"
+              style={{
+                background: "#3a78ff",
+                padding: "10px 18px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "14px",
+              }}
+            >
+              ← Dashboard
+            </a>
+          )}
+
+          {token && (
+            <button
+              onClick={logout}
+              style={{
+                background: "#d9534f",
+                padding: "10px 18px",
+                borderRadius: "8px",
+                border: "none",
+                cursor: "pointer",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "14px",
+              }}
+            >
+              Logout
+            </button>
+          )}
+
+          {!token && (
+            <a
+              href="/"
+              style={{
+                background: "#2c2c31",
+                padding: "10px 18px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                color: "#fff",
+                border: "1px solid #444",
+                fontWeight: "bold",
+                fontSize: "14px",
+              }}
+            >
+              Home
+            </a>
+          )}
+        </div>
+      </div>
 
       {/* Glowing Ambient Background */}
       <div style={styles.glow1}></div>
@@ -28,8 +103,6 @@ export default function PublicHome() {
       </ul>
 
       <div style={styles.container}>
-        <h1 style={styles.heading}>📰 Blog Homepage</h1>
-
         {posts.length === 0 ? (
           <p style={styles.noPosts}>No published posts available.</p>
         ) : (

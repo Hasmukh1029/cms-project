@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function PostsList() {
   const [posts, setPosts] = useState([]);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     axios
@@ -11,9 +12,62 @@ export default function PostsList() {
       .catch((err) => console.log(err));
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div style={{ width: "800px", margin: "auto", paddingTop: "20px" }}>
-      <h2>All Published Posts</h2>
+
+      {/* ✅ TOP NAV BAR (FUNCTIONAL ONLY — NO DESIGN CHANGE) */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <h2>All Published Posts</h2>
+
+        <div style={{ display: "flex", gap: "10px" }}>
+          {token && (
+            <a
+              href="/dashboard"
+              style={{
+                background: "#3a78ff",
+                padding: "8px 14px",
+                borderRadius: "6px",
+                textDecoration: "none",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "13px",
+              }}
+            >
+              ← Dashboard
+            </a>
+          )}
+
+          {token && (
+            <button
+              onClick={logout}
+              style={{
+                background: "#d9534f",
+                padding: "8px 14px",
+                borderRadius: "6px",
+                border: "none",
+                cursor: "pointer",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "13px",
+              }}
+            >
+              Logout
+            </button>
+          )}
+        </div>
+      </div>
 
       {posts.length === 0 && <p>No posts yet.</p>}
 

@@ -8,14 +8,13 @@ export default function EditPost() {
   const { id } = useParams();
   const token = localStorage.getItem("token");
 
-  const API = "https://cms-backend-hgpt.onrender.com"; // ✅ Render backend URL
+  const API = "https://cms-backend-hgpt.onrender.com";
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [categories, setCategories] = useState([]);
 
-  // 👉 Load categories + existing post
   useEffect(() => {
     axios.get(`${API}/api/categories`)
       .then(res => setCategories(res.data));
@@ -28,7 +27,6 @@ export default function EditPost() {
       });
   }, [id]);
 
-  // 👉 Update Post
   const updatePost = async () => {
     try {
       await axios.put(
@@ -51,7 +49,6 @@ export default function EditPost() {
     }
   };
 
-  // 👉 Delete Post
   const deletePost = async () => {
     if (!confirm("Delete this post?")) return;
 
@@ -70,6 +67,11 @@ export default function EditPost() {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div
       style={{
@@ -80,7 +82,50 @@ export default function EditPost() {
         fontFamily: "Arial, sans-serif",
       }}
     >
-      <h1 style={{ marginBottom: "20px" }}>✏️ Edit Post</h1>
+      {/* ✅ NAVIGATION BAR (ADDED WITHOUT DESIGN CHANGE) */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "25px",
+        }}
+      >
+        <h1 style={{ marginBottom: "0" }}>✏️ Edit Post</h1>
+
+        <div style={{ display: "flex", gap: "12px" }}>
+          <a
+            href="/posts"
+            style={{
+              background: "#3a78ff",
+              padding: "10px 18px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            ← Back to Posts
+          </a>
+
+          <button
+            onClick={logout}
+            style={{
+              background: "#d9534f",
+              padding: "10px 18px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
 
       <div
         style={{

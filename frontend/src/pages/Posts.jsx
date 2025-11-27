@@ -31,8 +31,60 @@ export default function Posts() {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <div style={styles.page}>
+      {/* ✅ TOP NAV BAR (ADDED WITHOUT DESIGN CHANGES) */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "25px",
+          position: "relative",
+          zIndex: 6,
+        }}
+      >
+        <h1 style={styles.heading}>📄 All Published Posts</h1>
+
+        <div style={{ display: "flex", gap: "12px" }}>
+          <a
+            href="/dashboard"
+            style={{
+              background: "#3a78ff",
+              padding: "10px 18px",
+              borderRadius: "8px",
+              textDecoration: "none",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            ← Dashboard
+          </a>
+
+          <button
+            onClick={logout}
+            style={{
+              background: "#d9534f",
+              padding: "10px 18px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
       {/* Background Glow Effects */}
       <div style={styles.glow1}></div>
       <div style={styles.glow2}></div>
@@ -45,8 +97,6 @@ export default function Posts() {
       </ul>
 
       <div style={styles.container}>
-        <h1 style={styles.heading}>📄 All Published Posts</h1>
-
         {posts.length === 0 ? (
           <p style={styles.noPosts}>No posts found.</p>
         ) : (
