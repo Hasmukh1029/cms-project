@@ -70,7 +70,7 @@ export default function Categories() {
             href="/dashboard"
             style={{
               background: "#3a78ff",
-              padding: "10px 18px",
+              padding: "9px 16px",
               borderRadius: "8px",
               textDecoration: "none",
               color: "#fff",
@@ -85,7 +85,7 @@ export default function Categories() {
             onClick={logout}
             style={{
               background: "#d9534f",
-              padding: "10px 18px",
+              padding: "9px 16px",
               borderRadius: "8px",
               border: "none",
               cursor: "pointer",
