@@ -44,7 +44,7 @@ export default function AdminLogin() {
             href="/dashboard"
             style={{
               background: "#3a78ff",
-              padding: "9px 16px",
+              padding: "10px 18px",
               borderRadius: "8px",
               color: "#fff",
               textDecoration: "none",
@@ -52,7 +52,7 @@ export default function AdminLogin() {
               fontSize: "13px",
             }}
           >
-            ← Dashboard
+            Dashboard
           </a>
         )}
 
@@ -61,7 +61,7 @@ export default function AdminLogin() {
             onClick={logout}
             style={{
               background: "#d9534f",
-              padding: "9px 16px",
+              padding: "10px 18px",
               borderRadius: "8px",
               border: "none",
               cursor: "pointer",

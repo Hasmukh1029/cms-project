@@ -78,7 +78,7 @@ export default function Categories() {
               fontSize: "14px",
             }}
           >
-            ← Dashboard
+             Dashboard
           </a>
 
           <button
