@@ -38,15 +38,17 @@ export default function Posts() {
 
   return (
     <div style={styles.page}>
-      {/* ✅ TOP NAV BAR (ADDED WITHOUT DESIGN CHANGES) */}
+      {/* ✅ TOP NAV BAR (centered like Categories page) */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "25px",
           position: "relative",
           zIndex: 6,
+          maxWidth: "1100px",
+          margin: "0 auto 25px auto", // centers the bar + spacing below
+          padding: "0 10px", // tiny padding so content isn't flush to edges
         }}
       >
         <h1 style={styles.heading}>📄 All Published Posts</h1>
@@ -154,7 +156,8 @@ const styles = {
     position: "absolute",
     width: "550px",
     height: "550px",
-    background: "radial-gradient(circle, rgba(80,80,255,0.22), transparent 70%)",
+    background:
+      "radial-gradient(circle, rgba(80,80,255,0.22), transparent 70%)",
     borderRadius: "50%",
     top: "-150px",
     left: "-160px",
