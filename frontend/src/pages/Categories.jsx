@@ -51,16 +51,17 @@ export default function Categories() {
 
   return (
     <div style={styles.page}>
-
-      {/* ✅ TOP NAV BAR (FUNCTIONAL ONLY — NO DESIGN CHANGE) */}
+      {/* ✅ TOP NAV BAR (centered & pulled slightly left from edge) */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "30px",
           position: "relative",
           zIndex: 6,
+          maxWidth: "1100px",
+          margin: "0 auto 30px auto", // centers the bar and adds bottom space
+          padding: "0 10px", // tiny side padding so text isn't touching edges
         }}
       >
         <h1 style={styles.heading}>Manage Categories</h1>
@@ -78,7 +79,7 @@ export default function Categories() {
               fontSize: "14px",
             }}
           >
-             Dashboard
+            Dashboard
           </a>
 
           <button
@@ -165,7 +166,8 @@ const styles = {
     position: "absolute",
     width: "500px",
     height: "500px",
-    background: "radial-gradient(circle, rgba(80,80,255,0.22), transparent 70%)",
+    background:
+      "radial-gradient(circle, rgba(80,80,255,0.22), transparent 70%)",
     borderRadius: "50%",
     top: "-140px",
     left: "-150px",
@@ -178,7 +180,8 @@ const styles = {
     position: "absolute",
     width: "500px",
     height: "500px",
-    background: "radial-gradient(circle, rgba(0,200,255,0.18), transparent 70%)",
+    background:
+      "radial-gradient(circle, rgba(0,200,255,0.18), transparent 70%)",
     borderRadius: "50%",
     bottom: "-160px",
     right: "-170px",
