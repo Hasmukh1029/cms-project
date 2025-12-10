@@ -66,7 +66,7 @@ export default function Posts() {
               fontSize: "14px",
             }}
           >
-            ← Dashboard
+             Dashboard
           </a>
 
           <button
